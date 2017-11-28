@@ -64,6 +64,7 @@ def default_userinfo(claims, user):
     Default function for setting OIDC_USERINFO.
     `claims` is a dict that contains all the OIDC standard claims.
     """
+    claims['email_verified'] = True
     return claims
 
 

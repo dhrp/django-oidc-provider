@@ -218,8 +218,10 @@ class TokenEndpoint(object):
             'refresh_token': token.refresh_token,
             'token_type': 'bearer',
             'expires_in': settings.get('OIDC_TOKEN_EXPIRE'),
-            'id_token': encode_id_token(id_token_dic, token.client),
         }
+
+        if 'openid' in self.code.scope:
+            dic['id_token'] = encode_id_token(id_token_dic, token.client)
 
         return dic
 

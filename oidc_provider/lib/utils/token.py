@@ -10,6 +10,7 @@ from jwkest.jws import JWS
 from jwkest.jwt import JWT
 
 from oidc_provider.lib.utils.common import get_issuer
+from oidc_provider.lib.claims import StandardScopeClaims
 from oidc_provider.models import (
     Code,
     RSAKey,
