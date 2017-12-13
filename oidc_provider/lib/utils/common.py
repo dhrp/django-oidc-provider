@@ -47,8 +47,14 @@ def get_issuer(site_url=None, request=None):
     appended.
     """
     site_url = get_site_url(site_url=site_url, request=request)
+
+    if settings.get('OIDC_ISSUER_PATH') is not None:
+        issuer_path = settings.get('OIDC_ISSUER_PATH')
+        return site_url + issuer_path
+
     path = reverse('oidc_provider:provider-info') \
         .split('/.well-known/openid-configuration')[0]
+
     issuer = site_url + path
 
     return str(issuer)

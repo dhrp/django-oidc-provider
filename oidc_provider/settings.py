@@ -26,6 +26,20 @@ class DefaultSettings(object):
         return None
 
     @property
+    def OIDC_ISSUER_PATH(self):
+        """
+        OIDC_ISSUER_PATH is the path that is included as part of the 'issuer'.
+        Use a path if you want to have multiple issuers on a single hostname. If you
+        change this setting you also need to make the .well-known endpoint available
+        under /
+        """
+
+        if hasattr(settings, 'OIDC_ISSUER_PATH'):
+            return settings.OIDC_ISSUER_PATH
+        else:
+            return None
+
+    @property
     def OIDC_AFTER_USERLOGIN_HOOK(self):
         """
         OPTIONAL.  Provide a way to plug into the process after
