@@ -18,9 +18,9 @@ class ClientForm(ModelForm):
     def __init__(self, *args, **kwargs):
         super(ClientForm, self).__init__(*args, **kwargs)
         self.fields['client_id'].required = False
-        self.fields['client_id'].widget.attrs['disabled'] = 'true'
+        # self.fields['client_id'].widget.attrs['disabled'] = 'true'
         self.fields['client_secret'].required = False
-        self.fields['client_secret'].widget.attrs['disabled'] = 'true'
+        # self.fields['client_secret'].widget.attrs['disabled'] = 'true'
 
     def clean_client_id(self):
         instance = getattr(self, 'instance', None)
