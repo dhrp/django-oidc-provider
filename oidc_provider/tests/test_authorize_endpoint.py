@@ -314,22 +314,6 @@ class AuthorizationCodeFlowTestCase(TestCase, AuthorizeEndpointMixin):
         response = self._auth_request('get', data)
         self.assertIn(RedirectUriError.error, response.content.decode('utf-8'), msg='No redirect_uri error')
 
-    def test_public_client_auto_approval(self):
-        """
-        It's recommended not auto-approving requests for non-confidential clients using Authorization Code.
-        """
-        data = {
-            'client_id': self.client_public_with_no_consent.client_id,
-            'response_type': 'code',
-            'redirect_uri': self.client_public_with_no_consent.default_redirect_uri,
-            'scope': 'openid email',
-            'state': self.state,
-        }
-
-        response = self._auth_request('get', data, is_user_authenticated=True)
-
-        self.assertIn('Request for Permission', response.content.decode('utf-8'))
-
     def test_prompt_none_parameter(self):
         """
         Specifies whether the Authorization Server prompts the End-User for reauthentication and consent.

@@ -6,7 +6,7 @@ from django.forms import ModelForm
 from django.contrib import admin
 from django.utils.translation import ugettext_lazy as _
 
-from oidc_provider.models import Client, Code, Token, RSAKey
+from oidc_provider.models import Client, Code, Token, RSAKey, UserConsent
 
 
 class ClientForm(ModelForm):
@@ -90,3 +90,8 @@ class TokenAdmin(admin.ModelAdmin):
 class RSAKeyAdmin(admin.ModelAdmin):
 
     readonly_fields = ['kid']
+
+
+@admin.register(UserConsent)
+class UserConsentAdmin(admin.ModelAdmin):
+    pass
