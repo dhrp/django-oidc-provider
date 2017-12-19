@@ -5,8 +5,10 @@ from uuid import uuid4
 from django.forms import ModelForm
 from django.contrib import admin
 from django.utils.translation import ugettext_lazy as _
+from django.utils.crypto import get_random_string
 
 from oidc_provider.models import Client, Code, Token, RSAKey, UserConsent
+
 
 
 class ClientForm(ModelForm):
@@ -25,9 +27,9 @@ class ClientForm(ModelForm):
     def clean_client_id(self):
         instance = getattr(self, 'instance', None)
         if instance and instance.pk:
-            return instance.client_id
+            return self.cleaned_data['client_id']
         else:
-            return str(randint(1, 999999)).zfill(6)
+            return get_random_string(12)
 
     def clean_client_secret(self):
         instance = getattr(self, 'instance', None)
