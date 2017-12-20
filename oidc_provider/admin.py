@@ -19,9 +19,9 @@ class ClientForm(ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(ClientForm, self).__init__(*args, **kwargs)
-        self.fields['client_id'].required = False
+        # self.fields['client_id'].required = False
         # self.fields['client_id'].widget.attrs['disabled'] = 'true'
-        self.fields['client_secret'].required = False
+        # self.fields['client_secret'].required = False
         # self.fields['client_secret'].widget.attrs['disabled'] = 'true'
 
     def clean_client_id(self):
@@ -34,18 +34,13 @@ class ClientForm(ModelForm):
     def clean_client_secret(self):
         instance = getattr(self, 'instance', None)
 
-        secret = ''
+        if self.cleaned_data['client_type'] != 'confidential':
+            return ''
 
         if instance and instance.pk:
-            if (self.cleaned_data['client_type'] == 'confidential') and not instance.client_secret:
-                secret = sha224(uuid4().hex.encode()).hexdigest()
-            elif (self.cleaned_data['client_type'] == 'confidential') and instance.client_secret:
-                secret = instance.client_secret
-        else:
-            if (self.cleaned_data['client_type'] == 'confidential'):
-                secret = sha224(uuid4().hex.encode()).hexdigest()
+            return self.cleaned_data['client_secret']
 
-        return secret
+        return sha224(uuid4().hex.encode()).hexdigest()
 
 
 @admin.register(Client)

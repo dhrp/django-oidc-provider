@@ -46,7 +46,11 @@ def get_issuer(site_url=None, request=None):
     Construct the issuer full url. Basically is the site url with some path
     appended.
     """
-    site_url = get_site_url(site_url=site_url, request=request)
+
+    if settings.get('OIDC_UNSAFE_ISSUER_OVERRIDE') is not None:
+        site_url = settings.get('OIDC_UNSAFE_ISSUER_OVERRIDE')
+    else:
+        site_url = get_site_url(site_url=site_url, request=request)
 
     if settings.get('OIDC_ISSUER_PATH') is not None:
         issuer_path = settings.get('OIDC_ISSUER_PATH')

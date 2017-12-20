@@ -26,6 +26,10 @@ class DefaultSettings(object):
         return None
 
     @property
+    def OIDC_UNSAFE_ISSUER_OVERRIDE(self):
+        return None
+
+    @property
     def OIDC_ISSUER_PATH(self):
         """
         OIDC_ISSUER_PATH is the path that is included as part of the 'issuer'.
