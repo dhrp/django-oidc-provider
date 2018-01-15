@@ -198,6 +198,13 @@ class RSAKey(models.Model):
         verbose_name = _(u'RSA Key')
         verbose_name_plural = _(u'RSA Keys')
 
+    def save(self, *args, **kwargs):
+        """
+        Convert pasted \r\n characters, because otherwise the kid changes when form is saved.
+        """
+        self.key = self.key.replace("\r\n", "\n")
+        super(RSAKey, self).save(*args, **kwargs)
+
     def __str__(self):
         return u'{0}'.format(self.kid)
 
